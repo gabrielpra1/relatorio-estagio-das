@@ -1,0 +1,398 @@
+% ------------------------------------------------------------------------
+% ------------------------------------------------------------------------
+% Modelo de relatório de estágio DAS - UFSC.
+% Esse modelo usa abnTeX2 (https://www.abntex.net.br/)
+% ------------------------------------------------------------------------
+% ------------------------------------------------------------------------
+
+\documentclass[
+	% -- opções da classe memoir --
+	12pt,				% tamanho da fonte
+	openright,			% capítulos começam em pág ímpar (insere página vazia caso preciso)
+	oneside,			% Para impressão simples. Para impressão frente e verso, use twoside
+	a4paper,			% tamanho do papel. 
+	% -- opções do pacote babel --
+	english,			% idioma adicional para hifenização
+	brazil				% o último idioma é o principal do documento
+	]{abntex2}
+
+% ---
+% Pacotes básicos 
+% ---
+\usepackage{lmodern}			% Usa a fonte Latin Modern			
+\usepackage[T1]{fontenc}		% Selecao de codigos de fonte.
+\usepackage[utf8]{inputenc}		% Codificacao do documento (conversão automática dos acentos)
+\usepackage{lastpage}			% Usado pela Ficha catalográfica
+\usepackage{indentfirst}		% Indenta o primeiro parágrafo de cada seção.
+\usepackage{color}				% Controle das cores
+\usepackage{graphicx}			% Inclusão de gráficos
+\usepackage{microtype} 			% para melhorias de justificação
+% ---
+		
+% ---
+% Pacotes de citações
+% ---
+\usepackage[brazilian,hyperpageref]{backref}	 % Paginas com as citações na bibl
+\usepackage[alf]{abntex2cite}	% Citações padrão ABNT
+
+% --- 
+% CONFIGURAÇÕES DE PACOTES
+% --- 
+
+% ---
+% Configurações do pacote backref
+% Usado sem a opção hyperpageref de backref
+\renewcommand{\backrefpagesname}{Citado na(s) página(s):~}
+% Texto padrão antes do número das páginas
+\renewcommand{\backref}{}
+% Define os textos da citação
+\renewcommand*{\backrefalt}[4]{
+	\ifcase #1 %
+		Nenhuma citação no texto.%
+	\or
+		Citado na página #2.%
+	\else
+		Citado #1 vezes nas páginas #2.%
+	\fi}%
+% ---
+
+% ---
+% Informações de dados para CAPA e FOLHA DE ROSTO
+% ---
+\titulo{Titulo: subtítulo}
+\autor{Nome do aluno}
+\local{Florianópolis}
+\data{2018}
+\orientador{Nome do orientador}
+\coorientador{Nome do coorientador} % Deixar vazio caso não haja
+\instituicao{%
+  UNIVERSIDADE FEDERAL DE SANTA CATARINA
+  \par
+  CENTRO TECNOLÓGICO
+  \par
+  DEPARTAMENTO DE AUTOMAÇÃO E SISTEMAS}
+\tipotrabalho{Relatório de Estágio}
+
+\preambulo{Relatório submetido à Universidade Federal de Santa Catarina como requisito para a aprovação na disciplina \textbf{DAS 5501 - Estágio em Controle e Automação Industrial} do curso de Graduação em Engenharia de Controle e Automação.}
+% ---
+
+% ---
+% Configurações de aparência do PDF final
+
+% alterando o aspecto da cor azul
+\definecolor{blue}{RGB}{41,5,195}
+
+% informações do PDF
+\makeatletter
+\hypersetup{
+     	%pagebackref=true,
+		pdftitle={\@title}, 
+		pdfauthor={\@author},
+    	pdfsubject={\imprimirpreambulo},
+	    pdfcreator={LaTeX with abnTeX2},
+		pdfkeywords={abnt}{latex}{abntex}{abntex2}{trabalho acadêmico}, 
+		colorlinks=true,       		% false: boxed links; true: colored links
+    	linkcolor=black,          	% color of internal links
+    	citecolor=blue,        		% color of links to bibliography
+    	filecolor=magenta,      		% color of file links
+		urlcolor=blue,
+		bookmarksdepth=4
+}
+\makeatother
+% --- 
+
+% --- 
+% Espaçamentos entre linhas e parágrafos 
+% --- 
+
+% O tamanho do parágrafo é dado por:
+\setlength{\parindent}{1.3cm}
+
+% Controle do espaçamento entre um parágrafo e outro:
+\setlength{\parskip}{0.2cm}  % tente também \onelineskip
+
+% ---
+% compila o indice
+% ---
+\makeindex
+% ---
+
+% ----
+% Início do documento
+% ----
+\begin{document}
+
+% Retira espaço extra obsoleto entre as frases.
+\frenchspacing 
+
+% ----------------------------------------------------------
+% ELEMENTOS PRÉ-TEXTUAIS
+% ----------------------------------------------------------
+% \pretextual
+
+% ---
+% Capa
+% ---
+
+\renewcommand{\imprimircapa}{%
+  \begin{capa}%
+    \center
+    \ABNTEXchapterfont\Large\textbf\imprimirinstituicao
+    
+    \vspace*{1cm}
+    
+    {\ABNTEXchapterfont\large\textbf\imprimirautor}
+    
+    \vfill
+    \begin{center}
+    \ABNTEXchapterfont\bfseries\ Relatório de Estágio \\
+    \ABNTEXchapterfont\bfseries\LARGE\imprimirtitulo
+    \end{center}
+    \vfill
+    
+    \large\imprimirlocal
+    
+    \large\imprimirdata
+    
+    \vspace*{1cm}
+  \end{capa}
+}
+
+\imprimircapa
+% ---
+
+% ---
+% Folha de rosto
+% (o * indica que haverá a ficha bibliográfica)
+% ---
+\makeatletter
+\renewcommand{\folhaderostocontent}{
+  \begin{center}
+  
+    {\ABNTEXchapterfont\large\textbf\imprimirautor}
+    
+    \vspace*{\fill}\vspace*{\fill}
+    
+    \begin{center}
+    	\ABNTEXchapterfont\bfseries\Large\imprimirtitulo
+    \end{center}
+    
+    \vspace*{\fill}
+    
+    \abntex@ifnotempty{\imprimirpreambulo}{%
+      \hspace{.45\textwidth}
+      \begin{minipage}{.5\textwidth}
+      \SingleSpacing
+      \imprimirpreambulo
+      \par
+      {\imprimirorientadorRotulo~\imprimirorientador\par}
+      \abntex@ifnotempty{\imprimircoorientador}{%
+    	{\imprimircoorientadorRotulo~\imprimircoorientador}%
+      }%
+      \end{minipage}%
+      \vspace*{\fill}
+    }%
+    
+    \vspace*{\fill}
+    
+    {\large\imprimirlocal}
+    
+    \par
+    
+    {\large\imprimirdata}
+    
+    \vspace*{1cm}
+  \end{center}
+}
+\makeatother
+
+\imprimirfolhaderosto
+% ---
+
+% ---
+% Inserir folha de aprovação
+% ---
+
+% Isto é um exemplo de Folha de aprovação, elemento obrigatório da NBR
+% 14724/2011 (seção 4.2.1.3). Você pode utilizar este modelo até a aprovação
+% do trabalho. Após isso, substitua todo o conteúdo deste arquivo por uma
+% imagem da página assinada pela banca com o comando abaixo:
+%
+% \includepdf{folhadeaprovacao_final.pdf}
+%
+\makeatletter
+\begin{folhadeaprovacao}
+
+  \begin{center}
+    {\ABNTEXchapterfont\large\imprimirautor}
+
+    \vspace*{\fill}\vspace*{\fill}
+    \begin{center}
+      \ABNTEXchapterfont\bfseries\Large\imprimirtitulo
+    \end{center}
+    \vspace*{\fill}
+    
+    Este relatório de estágio foi julgado no contexto da disciplina DAS5501: Estágio em Controle e Automação Industrial e \textbf{APROVADO} na sua forma final pelo Curso de Engenharia de Controle e Automação.
+    
+    \vspace*{\fill}
+    
+    Florianópolis, 22 de junho de 2018
+  \end{center}
+  
+   \assinatura{\textbf{\imprimirorientador} \\ Orientador \\ Universidade Federal de Santa Catarina}
+   
+   \assinatura{\textbf{Nome do Supervisor} \\ Supervisor na Empresa \\ EMPRESA}
+      
+   \abntex@ifnotempty{\imprimircoorientador}{%
+     \assinatura{\textbf{\imprimircoorientador} \\ Co-orientador \\ Universidade Federal de Santa Catarina}
+   }%
+\makeatother
+   
+        
+\end{folhadeaprovacao}
+% ---
+
+% ---
+% Dedicatória
+% ---
+\begin{dedicatoria}
+   \vspace*{\fill}
+   \centering
+   \noindent
+   \textit{Dedicatória: OPCIONAL} \vspace*{\fill}
+\end{dedicatoria}
+% ---
+
+% ---
+% Agradecimentos
+% ---
+\begin{agradecimentos}
+(OPCIONAL): Essa seção não possui uma estrutura pré-definida. O mais usual é separar em parágrafos. Mencionar apenas pessoas, instituições e outros que tenham tido importância para a realização do trabalho.
+
+\end{agradecimentos}
+% ---
+
+% ---
+% Epígrafe
+% ---
+\begin{epigrafe}
+    \vspace*{\fill}
+	\begin{flushright}
+		\textit{``Epígrafe (Opcional – NBR10520). Elemento opcional, no qual o autor apresenta uma citação, seguida de indicação de autoria, relacionada à matéria tratada no corpo do trabalho.''}
+	\end{flushright}
+\end{epigrafe}
+% ---
+
+% ---
+% RESUMOS
+% ---
+
+% resumo em português
+\setlength{\absparsep}{18pt} % ajusta o espaçamento dos parágrafos do resumo
+\begin{resumo}
+	\input{resumo.tex}
+\end{resumo}
+
+% resumo em inglês
+\begin{resumo}[Abstract]
+ \begin{otherlanguage*}{english}
+	\input{abstract.tex}
+ \end{otherlanguage*}
+\end{resumo}
+
+% Inserir listas. Todas essas listas são opcionais.
+\input{listas.tex}
+
+% ---
+% inserir o sumario
+% ---
+\pdfbookmark[0]{\contentsname}{toc}
+\tableofcontents*
+\cleardoublepage
+% ---
+
+
+
+% ----------------------------------------------------------
+% ELEMENTOS TEXTUAIS
+% ----------------------------------------------------------
+\textual
+
+% ----------------------------------------------------------
+% Introdução (exemplo de capítulo sem numeração, mas presente no Sumário)
+% ----------------------------------------------------------
+\chapter*[Introdução]{Introdução}
+\addcontentsline{toc}{chapter}{Introdução}
+% ----------------------------------------------------------
+
+\input{introducao.tex}
+
+
+% Desenvolvimento
+\input{desenvolvimento/capitulo1.tex}
+\input{desenvolvimento/capitulo2.tex}
+\input{desenvolvimento/capitulo3.tex}
+\input{desenvolvimento/capitulo4.tex}
+\input{desenvolvimento/capitulo5.tex}
+\input{desenvolvimento/capitulo6.tex}
+\input{desenvolvimento/capitulo7.tex}
+
+
+% ----------------------------------------------------------
+% Finaliza a parte no bookmark do PDF
+% para que se inicie o bookmark na raiz
+% e adiciona espaço de parte no Sumário
+% ----------------------------------------------------------
+\phantompart
+
+% ----------------------------------------------------------
+% ELEMENTOS PÓS-TEXTUAIS
+% ----------------------------------------------------------
+\postextual
+% ----------------------------------------------------------
+
+% ----------------------------------------------------------
+% Referências bibliográficas
+% ----------------------------------------------------------
+\bibliography{bibliografia}
+
+% ----------------------------------------------------------
+% Apêndices
+% ----------------------------------------------------------
+
+% ---
+% Inicia os apêndices
+% ---
+\begin{apendicesenv}
+
+\chapter{Título Opcional}
+Textos elaborados pelo próprio autor, a fim de complementar a sua argumentação
+
+\end{apendicesenv}
+% ---
+
+
+% ----------------------------------------------------------
+% Anexos
+% ----------------------------------------------------------
+
+% ---
+% Inicia os anexos
+% ---
+\begin{anexosenv}
+
+% ---
+\chapter{Título Opcional.}
+% ---
+Documentos não elaborados pelo autor, utilizados de fundamentação (mapas, leis, estatutos).
+
+\end{anexosenv}
+
+%---------------------------------------------------------------------
+% INDICE REMISSIVO
+%---------------------------------------------------------------------
+\phantompart
+\printindex
+%---------------------------------------------------------------------
+
+\end{document}

@@ -1,7 +1,7 @@
 % ------------------------------------------------------------------------
 % ------------------------------------------------------------------------
 % Modelo de relatório de estágio DAS - UFSC.
-% Esse modelo usa abnTeX2 (https://www.abntex.net.br/)
+% Contribua em https://github.com/gabrielpra1/relatorio-estagio-das
 % ------------------------------------------------------------------------
 % ------------------------------------------------------------------------
 
@@ -32,8 +32,16 @@
 % ---
 % Pacotes de citações
 % ---
-\usepackage[brazilian,hyperpageref]{backref}	 % Paginas com as citações na bibl
-\usepackage[alf]{abntex2cite}	% Citações padrão ABNT
+\usepackage[brazilian,hyperpageref]{backref}
+
+% Escolha um dos formatos de citação:
+
+% Citação estilo IEEE: "Lorem ipsum [1]."
+\usepackage[num]{abntex2cite}
+\citebrackets[]
+
+% Citação estilo "Lorem ipsum (Autor, 1986)."
+%\usepackage[alf]{abntex2cite}	% Citações padrão ABNT
 
 % --- 
 % CONFIGURAÇÕES DE PACOTES
@@ -300,7 +308,8 @@
  \end{otherlanguage*}
 \end{resumo}
 
-% Inserir listas. Todas essas listas são opcionais.
+% Inserir listas. 
+% Todas essas listas são opcionais, então caso não queira usar nenhuma, basta comentar a próxima linha.
 \input{listas.tex}
 
 % ---
